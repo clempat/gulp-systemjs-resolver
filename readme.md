@@ -33,7 +33,7 @@ In your scss file, you can import like:
 
 ## API
 
-### systemResolver(options)
+### systemjsResolver(options)
 
 #### options
 
