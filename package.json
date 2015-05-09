@@ -1,0 +1,40 @@
+{
+  "name": "gulp-systemjs-resolver",
+  "version": "0.0.2",
+  "description": "",
+  "license": "MIT",
+  "repository": "clempat/gulp-systemjs-resolver",
+  "author": {
+    "name": "Clément Patout",
+    "email": "clement.patout@gmail.com",
+    "url": "https://github.com/clempat"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "systemjs",
+    "sass",
+    "@import"
+  ],
+  "dependencies": {
+    "assert": "^1.3.0",
+    "fs": "0.0.2",
+    "gulp-util": "^3.0.1",
+    "rsvp": "^3.0.18",
+    "systemjs": "^0.16.10",
+    "through2": "^0.6.3"
+  },
+  "devDependencies": {
+    "event-stream": "^3.3.1",
+    "mocha": "*",
+    "simple-mock": "^0.2.14"
+  }
+}
