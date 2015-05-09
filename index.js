@@ -7,6 +7,8 @@ var RSVP    = require('rsvp');
 var Promise = require('rsvp').Promise;
 var path    = require('path');
 
+var regex = /@import\s*['"](~.*)['"];?\s*?/mig;
+
 module.exports = function(options) {
 	if (!options || !options.systemConfig) {
 		throw new gutil.PluginError('gulp-systemjs-resolver', '`systemConfig` required');
@@ -35,6 +37,7 @@ module.exports = function(options) {
 		 * @returns {*}
 		 */
 		function resolve(val, i) {
+			val = val.replace('~', '');
 			return Promise.resolve(System.normalize(val))
 					.then(function(normalized) {
 						return System.locate({name: normalized, metadata: {}});
@@ -50,8 +53,7 @@ module.exports = function(options) {
 		 * @returns {XML|string|void}
 		 */
 		function extractFile(val) {
-			var exp = /@import\s*['"](.*)['"];?\s*?/mig;
-			return val.replace(exp, '$1');
+			return val.replace(regex, '$1');
 		}
 
 		/**
@@ -59,7 +61,7 @@ module.exports = function(options) {
 		 * @param fileContent
 		 */
 		function resolveAll(fileContent) {
-			var matches = fileContent.match(/@import\s*['"](.*)['"];?\s*?/mig).map(extractFile);
+			var matches = fileContent.match(regex).map(extractFile);
 
 			if (!matches) {
 				return new RSVP.Promise(function(resolve) {

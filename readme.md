@@ -23,6 +23,13 @@ gulp.task('sass', function () {
 });
 ```
 
+In your scss file, you can import like:
+
+```sass
+@import "~thoughtbot/bourbon/bourbon.scss"; //Import bourbon file
+@import "./variable.scss"; // Import local file
+```
+
 
 ## API
 

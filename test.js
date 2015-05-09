@@ -5,14 +5,16 @@ var gutil          = require('gulp-util');
 var systemResolver = require('./');
 
 var fixture = [
-	'@import "bourbon/test.scss"',
-	"@import 'neat/test.scss'",
+	'@import "~bourbon/test.scss"',
+	"@import '~neat/test.scss'",
+	"@import './variable/test.scss'",
 	'p {background-color: 10px}'
 ].join('\n');
 
 var expected = [
 	'@import "path/resolved/bourbon/test.scss"',
 	"@import 'path/resolved/neat/test.scss'",
+	"@import './variable/test.scss'",
 	'p {background-color: 10px}'
 ].join('\n');
 
