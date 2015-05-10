@@ -76,3 +76,23 @@ it('should append path', function(done) {
 
 	RSVP.on('error', done);
 });
+
+
+it('should resolve path', function(done) {
+	includePaths = [];
+	var stream = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
+
+	stream.write(new gutil.File({
+		base    : __dirname,
+		path    : __dirname + '/file.ext',
+		contents: new Buffer('/* @importPath "~bourbon" */')
+	}));
+
+	stream.on('data', function(file) {
+		assert.strictEqual(file.contents.toString('utf8'), '/* @importPath "~bourbon" */');
+		assert.deepEqual(includePaths, [ __dirname + "/path/resolved/bourbon"]);
+		done();
+	});
+
+	RSVP.on('error', done);
+});
