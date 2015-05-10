@@ -50,6 +50,23 @@ Then in your scss file, you can import like:
 
 or
 
+```js
+var gulp = require('gulp');
+var sass = require('gulp-sass');
+var sassResolver = require('gulp-systemjs-resolver');
+
+var includePaths = [];
+
+gulp.task('sass', function () {
+	return gulp.src('src/file.scss')
+		.pipe(sassResolver({systemConfig: './config.js', includePaths: includePaths}))
+		.pipe(sass({includePaths: includePaths}))
+		.pipe(gulp.dest('dist'));
+});
+```
+
+and
+
 ```sass
 /* @importPath '~bourbon' */
 @import "_bourbon.scss"; //Import bourbon file
