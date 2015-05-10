@@ -86,6 +86,13 @@ Default: ``
 
 This is the path to the SystemJs config file for example `./config.js`
 
+##### includePaths
+
+Type: `Array`  
+Default: `[]`
+
+This is the original includePaths which will be passed to sass plugin
+
 
 ## License
 
