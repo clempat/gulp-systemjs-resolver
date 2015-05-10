@@ -52,7 +52,7 @@ module.exports = function(options) {
 					.then(function(address) {
 						if (isPath) {
 							options.includePaths.push(
-									path.relative(file.base, address.replace('file:', '').replace('.js', ''))
+									address.replace('file:', '').replace('.js', '')
 							);
 						} else {
 							replacements[i] = path.relative(file.base, address.replace('file:', '').replace('.js', ''));
