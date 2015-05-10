@@ -1,4 +1,4 @@
-# gulp-sass-resolver [![Build Status](https://travis-ci.org/clempat/gulp-systemjs-resolver.svg?branch=master)](https://travis-ci.org/clempat/gulp-systemjs-resolver)
+# gulp-systemjs-resolver [![Build Status](https://travis-ci.org/clempat/gulp-systemjs-resolver.svg?branch=master)](https://travis-ci.org/clempat/gulp-systemjs-resolver)
 
 > My Sass Import resolver using systemjs gulp plugin
 
