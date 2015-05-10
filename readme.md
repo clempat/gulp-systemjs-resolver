@@ -48,6 +48,14 @@ Then in your scss file, you can import like:
 @import "./variable.scss"; // Import local file
 ```
 
+or
+
+```sass
+/* @importPath '~bourbon' */
+@import "_bourbon.scss"; //Import bourbon file
+@import "./variable.scss"; // Import local file
+```
+
 ## API
 
 ### systemjsResolver(options)
