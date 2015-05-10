@@ -97,14 +97,14 @@ module.exports = function(options) {
 			var matches      = [].concat(fileContent.match(regexFile)).filter(Boolean).map(extractFile);
 			var pathsMatches = [].concat(fileContent.match(regexPath)).filter(Boolean).map(extractFile);
 
-			if (matches.length === 0 && matches.length === 0) {
+			if (matches.length === 0 && pathsMatches.length === 0) {
 				return new RSVP.Promise(function(resolve) {
 					resolve(fileContent)
 				});
 			}
 
-			var promises      = matches.map(resolveFile);
-			var promisesPaths = pathsMatches.map(resolvePath);
+			var promises      = [].concat(matches.map(resolveFile)).filter(Boolean);
+			var promisesPaths = [].concat(pathsMatches.map(resolvePath)).filter(Boolean);
 
 			return RSVP.all(promises.concat(promisesPaths)).then(function() {
 				for (var i = 0, len = matches.length; i < len; i++) {
