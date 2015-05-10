@@ -23,13 +23,30 @@ gulp.task('sass', function () {
 });
 ```
 
-In your scss file, you can import like:
-
-```sass
-@import "~thoughtbot/bourbon/bourbon.scss"; //Import bourbon file
-@import "./variable.scss"; // Import local file
+I personally in my project use jspm and configure the package this way for bourbon:
+```json
+{
+  "jspm": {
+    "dependencies": {
+      "bourbon": "github:thoughtbot/bourbon@^4.2.3"
+    },
+    "overrides": {
+      "github:thoughtbot/bourbon@4.2.3": {
+        "directories": {
+          "lib": "bourbon-v4.2.3"
+        }
+      }
+    }
+  }
+}
 ```
 
+Then in your scss file, you can import like:
+
+```sass
+@import "~bourbon/_bourbon.scss"; //Import bourbon file
+@import "./variable.scss"; // Import local file
+```
 
 ## API
 
