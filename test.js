@@ -33,7 +33,7 @@ it('should resolve the import string', function(done) {
 
 	stream.on('data', function(file) {
 		assert.strictEqual(file.contents.toString('utf8'), expected);
-		assert.deepEqual(includePaths, ["path/resolved/bourbon"]);
+		assert.deepEqual(includePaths, [__dirname + "/path/resolved/bourbon"]);
 		done();
 	});
 
@@ -70,7 +70,7 @@ it('should append path', function(done) {
 
 	stream.on('data', function(file) {
 		assert.strictEqual(file.contents.toString('utf8'), expected);
-		assert.deepEqual(includePaths, ["Exemple1", "path/resolved/bourbon"]);
+		assert.deepEqual(includePaths, ["Exemple1", __dirname + "/path/resolved/bourbon"]);
 		done();
 	});
 
