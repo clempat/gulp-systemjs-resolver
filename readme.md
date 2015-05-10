@@ -51,7 +51,7 @@ Then in your scss file, you can import like:
 or
 
 ```sass
-/* @import '~bourbon' */
+/* @importPath '~bourbon' */
 @import "_bourbon.scss"; //Import bourbon file
 @import "./variable.scss"; // Import local file
 ```
