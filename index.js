@@ -7,11 +7,17 @@ var RSVP    = require('rsvp');
 var Promise = require('rsvp').Promise;
 var path    = require('path');
 
-var regex = /@import\s*['"](~.*)['"];?\s*?/mig;
+var regex     = /@import(Path)?\s*['"](~.*)['"]/mig;
+var regexFile = /@import\s*['"](~.*)['"]/mig;
+var regexPath = /@importPath\s*['"](~.*)['"]/mig;
 
 module.exports = function(options) {
 	if (!options || !options.systemConfig) {
 		throw new gutil.PluginError('gulp-systemjs-resolver', '`systemConfig` required');
+	}
+
+	if (!options.includePaths) {
+		options.includePaths = [];
 	}
 
 	eval(fs.readFileSync(options.systemConfig, 'utf8'));
@@ -31,20 +37,47 @@ module.exports = function(options) {
 		}
 
 		/**
-		 * Use systemjs to resolve path
+		 * Use systemjs to resolve include files
 		 * @param val
 		 * @param i
+		 * @param {Boolean} isPath
 		 * @returns {*}
 		 */
-		function resolve(val, i) {
+		function resolve(val, i, isPath) {
 			val = val.replace('~', '');
 			return Promise.resolve(System.normalize(val))
 					.then(function(normalized) {
 						return System.locate({name: normalized, metadata: {}});
 					})
 					.then(function(address) {
-						replacements[i] = address.replace('file:', '').replace('.js', '');
+						if (isPath) {
+							options.includePaths.push(
+									path.relative(file.base, address.replace('file:', '').replace('.js', ''))
+							);
+						} else {
+							replacements[i] = path.relative(file.base, address.replace('file:', '').replace('.js', ''));
+						}
 					});
+		}
+
+		/**
+		 * Wrapper for resolve File
+		 * @param val
+		 * @param i
+		 * @returns {*}
+		 */
+		function resolveFile(val, i) {
+			return resolve(val, i, false);
+		}
+
+		/**
+		 * Wrapper for resolve Path
+		 * @param val
+		 * @param i
+		 * @returns {*}
+		 */
+		function resolvePath(val, i) {
+			return resolve(val, i, true);
 		}
 
 		/**
@@ -53,7 +86,7 @@ module.exports = function(options) {
 		 * @returns {XML|string|void}
 		 */
 		function extractFile(val) {
-			return val.replace(regex, '$1');
+			return val.replace(regex, '$2');
 		}
 
 		/**
@@ -61,21 +94,22 @@ module.exports = function(options) {
 		 * @param fileContent
 		 */
 		function resolveAll(fileContent) {
-			var matches = fileContent.match(regex).map(extractFile);
+			var matches      = [].concat(fileContent.match(regexFile)).filter(Boolean).map(extractFile);
+			var pathsMatches = [].concat(fileContent.match(regexPath)).filter(Boolean).map(extractFile);
 
-			if (!matches) {
+			if (matches.length === 0 && matches.length === 0) {
 				return new RSVP.Promise(function(resolve) {
 					resolve(fileContent)
 				});
 			}
 
-			var promises = matches.map(resolve);
+			var promises      = matches.map(resolveFile);
+			var promisesPaths = pathsMatches.map(resolvePath);
 
-			return RSVP.all(promises).then(function() {
+			return RSVP.all(promises.concat(promisesPaths)).then(function() {
 				for (var i = 0, len = matches.length; i < len; i++) {
-					fileContent = fileContent.replace(matches[i], path.relative(file.base, replacements[i]));
+					fileContent = fileContent.replace(matches[i], replacements[i]);
 				}
-
 				return fileContent;
 			});
 
