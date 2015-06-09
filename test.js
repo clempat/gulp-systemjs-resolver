@@ -26,14 +26,14 @@ it('should resolve the import string', function(done) {
 	var stream = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
 
 	stream.write(new gutil.File({
-		base    : __dirname,
-		path    : __dirname + '/file.ext',
+		base    : '',
+		path    : '/file.ext',
 		contents: new Buffer(fixture)
 	}));
 
 	stream.on('data', function(file) {
 		assert.strictEqual(file.contents.toString('utf8'), expected);
-		assert.deepEqual(includePaths, [__dirname + "/path/resolved/bourbon"]);
+		assert.deepEqual(includePaths, ["path/resolved/bourbon"]);
 		done();
 	});
 
@@ -44,8 +44,8 @@ it('shoud not throw exception when no resolution needed', function(done) {
 	var stream = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
 
 	stream.write(new gutil.File({
-		base    : __dirname,
-		path    : __dirname + '/file.ext',
+		base    : '',
+		path    : '/file.ext',
 		contents: new Buffer("@import './variable/test.scss'")
 	}));
 
@@ -63,14 +63,14 @@ it('should append path', function(done) {
 	var stream = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
 
 	stream.write(new gutil.File({
-		base    : __dirname,
-		path    : __dirname + '/file.ext',
+		base    : '',
+		path    : '/file.ext',
 		contents: new Buffer(fixture)
 	}));
 
 	stream.on('data', function(file) {
 		assert.strictEqual(file.contents.toString('utf8'), expected);
-		assert.deepEqual(includePaths, ["Exemple1", __dirname + "/path/resolved/bourbon"]);
+		assert.deepEqual(includePaths, ["Exemple1", "path/resolved/bourbon"]);
 		done();
 	});
 
@@ -83,14 +83,14 @@ it('should resolve path', function(done) {
 	var stream = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
 
 	stream.write(new gutil.File({
-		base    : __dirname,
-		path    : __dirname + '/file.ext',
+		base    : '',
+		path    : '/file.ext',
 		contents: new Buffer('/* @importPath "~bourbon" */')
 	}));
 
 	stream.on('data', function(file) {
 		assert.strictEqual(file.contents.toString('utf8'), '/* @importPath "~bourbon" */');
-		assert.deepEqual(includePaths, [ __dirname + "/path/resolved/bourbon"]);
+		assert.deepEqual(includePaths, [ "path/resolved/bourbon"]);
 		done();
 	});
 

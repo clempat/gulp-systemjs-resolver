@@ -49,13 +49,19 @@ module.exports = function(options) {
 					.then(function(normalized) {
 						return System.locate({name: normalized, metadata: {}});
 					})
-					.then(function(address) {
+					.then(function (address) {
+						var fromRelativeSource = isPath ? process.cwd() : file.base; // take first path from gulp location or current file
+					    
+						var originalRelativePath = path.relative(fromRelativeSource, path.resolve(address.replace('file:', '').replace('.js', '')));
+						var originalRelativePathArray = originalRelativePath.split(path.sep);
+						var posixRelativePath = path.posix.join.apply(this, originalRelativePathArray);
+
 						if (isPath) {
 							options.includePaths.push(
-									address.replace('file:', '').replace('.js', '')
+									posixRelativePath
 							);
 						} else {
-							replacements[i] = path.relative(file.base, address.replace('file:', '').replace('.js', ''));
+							replacements[i] = posixRelativePath;
 						}
 					});
 		}
