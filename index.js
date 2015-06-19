@@ -49,13 +49,16 @@ module.exports = function(options) {
 					.then(function(normalized) {
 						return System.locate({name: normalized, metadata: {}});
 					})
-					.then(function(address) {
-						if (isPath) {
+					.then(function (address) {
+					    if (isPath) {
 							options.includePaths.push(
-									address.replace('file:', '').replace('.js', '')
+									path.resolve(address.replace('file:', '').replace('.js', ''))
 							);
 						} else {
-							replacements[i] = path.relative(file.base, address.replace('file:', '').replace('.js', ''));
+							var originalRelativePath = path.relative(path.dirname(file.path), path.resolve(address.replace('file:', '').replace('.js', '')));
+							var originalRelativePathArray = originalRelativePath.split(path.sep);
+							var posixRelativePath = path.posix.join.apply(this, originalRelativePathArray);
+							replacements[i] = posixRelativePath;
 						}
 					});
 		}
