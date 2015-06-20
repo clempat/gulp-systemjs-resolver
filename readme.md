@@ -1,6 +1,6 @@
-# gulp-systemjs-resolver
 [![NPM](https://nodei.co/npm/gulp-systemjs-resolver.png?downloads=true&downloadRank=true)](https://nodei.co/npm/gulp-systemjs-resolver/)
-[![Unix-like Build Status](https://travis-ci.org/clempat/gulp-systemjs-resolver.svg?branch=master)](https://travis-ci.org/clempat/gulp-systemjs-resolver) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/clempat/gulp-systemjs-resolver?svg=true&branch=master)](https://ci.appveyor.com/project/clempat/gulp-systemjs-resolver) [![npm version](https://badge.fury.io/js/gulp-systemjs-resolver.svg)](http://badge.fury.io/js/gulp-systemjs-resolver) [![npm dependencies](https://david-dm.org/clempat/gulp-systemjs-resolver.svg)]
+# gulp-systemjs-resolver
+[![Unix-like Build Status](https://travis-ci.org/clempat/gulp-systemjs-resolver.svg?branch=master)](https://travis-ci.org/clempat/gulp-systemjs-resolver) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/clempat/gulp-systemjs-resolver?svg=true&branch=master)](https://ci.appveyor.com/project/clempat/gulp-systemjs-resolver) [![npm version](https://badge.fury.io/js/gulp-systemjs-resolver.svg)](http://badge.fury.io/js/gulp-systemjs-resolver) [npm dependencies](https://david-dm.org/clempat/gulp-systemjs-resolver.svg)
 
 > My Sass Import resolver using systemjs gulp plugin
 
