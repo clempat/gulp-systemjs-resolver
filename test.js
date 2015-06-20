@@ -3,6 +3,7 @@ var assert         = require('assert');
 var RSVP           = require('rsvp');
 var gutil          = require('gulp-util');
 var systemResolver = require('./');
+var path           = require('path');
 
 var fixture = [
 	"/* @importPath '~bourbon' */",
@@ -26,14 +27,14 @@ it('should resolve the import string', function(done) {
 	var stream = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
 
 	stream.write(new gutil.File({
-		base    : '/drive/app',
-		path    : '/drive/app' + '/file.ext',
+		base    : __dirname,
+		path    : __dirname + '/file.ext',
 		contents: new Buffer(fixture)
 	}));
 
 	stream.on('data', function(file) {
 		assert.strictEqual(file.contents.toString('utf8'), expected);
-		assert.deepEqual(includePaths, ['/drive/app' + "/path/resolved/bourbon"]);
+		assert.deepEqual(includePaths, [__dirname + path.sep + path.join('path', 'resolved', 'bourbon')]);
 		done();
 	});
 
@@ -44,8 +45,8 @@ it('shoud not throw exception when no resolution needed', function(done) {
 	var stream = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
 
 	stream.write(new gutil.File({
-		base    : '/drive/app',
-		path    : '/drive/app' + '/file.ext',
+		base    : __dirname,
+		path    : __dirname + path.sep + 'file.ext',
 		contents: new Buffer("@import './variable/test.scss'")
 	}));
 
@@ -60,37 +61,36 @@ it('shoud not throw exception when no resolution needed', function(done) {
 
 it('should append path', function(done) {
 	includePaths = ['Exemple1'];
-	var stream = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
+	var stream   = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
 
 	stream.write(new gutil.File({
-		base    : '/drive/app',
-		path    : '/drive/app' + '/file.ext',
+		base    : __dirname,
+		path    : __dirname + path.sep + 'file.ext',
 		contents: new Buffer(fixture)
 	}));
 
 	stream.on('data', function(file) {
 		assert.strictEqual(file.contents.toString('utf8'), expected);
-		assert.deepEqual(includePaths, ["Exemple1", '/drive/app' + "/path/resolved/bourbon"]);
+		assert.deepEqual(includePaths, ["Exemple1", __dirname + path.sep + path.join('path', 'resolved', 'bourbon')]);
 		done();
 	});
 
 	RSVP.on('error', done);
 });
 
-
 it('should resolve path', function(done) {
 	includePaths = [];
-	var stream = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
+	var stream   = systemResolver({systemConfig: './fixtures/config.js', includePaths: includePaths});
 
 	stream.write(new gutil.File({
-		base    : '/drive/app',
-		path    : '/drive/app' + '/file.ext',
+		base    : __dirname,
+		path    : __dirname + path.sep + 'file.ext',
 		contents: new Buffer('/* @importPath "~bourbon" */')
 	}));
 
 	stream.on('data', function(file) {
 		assert.strictEqual(file.contents.toString('utf8'), '/* @importPath "~bourbon" */');
-		assert.deepEqual(includePaths, [ '/drive/app' + "/path/resolved/bourbon"]);
+		assert.deepEqual(includePaths, [__dirname + path.sep + path.join('path', 'resolved', 'bourbon')]);
 		done();
 	});
 

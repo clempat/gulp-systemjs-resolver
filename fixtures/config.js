@@ -1,6 +1,6 @@
 System.config({
 	"map": {
-		"bourbon": '/drive/app' + '/path/resolved/bourbon',
-		"neat": '/drive/app' + '/path/resolved/neat'
+		"bourbon": __dirname + '/path/resolved/bourbon',
+		"neat": __dirname + '/path/resolved/neat'
 	}
 });
