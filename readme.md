@@ -1,4 +1,4 @@
-# gulp-systemjs-resolver [![Build Status](https://travis-ci.org/clempat/gulp-systemjs-resolver.svg?branch=master)](https://travis-ci.org/clempat/gulp-systemjs-resolver)
+# gulp-systemjs-resolver [![Unix-like Build Status](https://travis-ci.org/clempat/gulp-systemjs-resolver.svg?branch=master)](https://travis-ci.org/clempat/gulp-systemjs-resolver) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/clempat/gulp-systemjs-resolver?svg=true&branch=master)](https://ci.appveyor.com/project/clempat/gulp-systemjs-resolver)
 
 > My Sass Import resolver using systemjs gulp plugin
 
