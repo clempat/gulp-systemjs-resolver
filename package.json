@@ -1,6 +1,6 @@
 {
   "name": "gulp-systemjs-resolver",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "license": "MIT",
   "repository": "clempat/gulp-systemjs-resolver",
