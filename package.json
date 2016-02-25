@@ -25,10 +25,10 @@
     "@import"
   ],
   "dependencies": {
-    "gulp-util": "^3.0.1",
-    "rsvp": "^3.0.18",
-    "systemjs": "^0.18.1",
-    "through2": "^2.0.0"
+    "gulp-util": "^3.0.7",
+    "rsvp": "^3.2.1",
+    "systemjs": "^0.19.23",
+    "through2": "^2.0.1"
   },
   "devDependencies": {
     "event-stream": "^3.3.1",
