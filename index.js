@@ -11,6 +11,8 @@ var regex     = /@import(Path)?\s*['"](~.*)['"]/mig;
 var regexFile = /@import\s*['"](~.*)['"]/mig;
 var regexPath = /@importPath\s*['"](~.*)['"]/mig;
 
+var systemjsInitialized = false;
+
 module.exports = function(options) {
 	if (!options || !options.systemConfig) {
 		throw new gutil.PluginError('gulp-systemjs-resolver', '`systemConfig` required');
@@ -20,7 +22,10 @@ module.exports = function(options) {
 		options.includePaths = [];
 	}
 
-	eval(fs.readFileSync(options.systemConfig, 'utf8'));
+	if(!systemjsInitialized) {
+		eval(fs.readFileSync(options.systemConfig, 'utf8'));
+		systemjsInitialized = true;
+	}
 
 	return through.obj(function(file, enc, cb) {
 		var replacements = [],
