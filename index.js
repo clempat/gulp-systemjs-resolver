@@ -50,19 +50,24 @@ module.exports = function(options) {
 		 */
 		function resolve(val, i, isPath) {
 			val = val.replace('~', '');
+			var isWin = /^win/.test(process.platform);
 			return Promise.resolve(System.normalize(val))
 					.then(function(normalized) {
 						return System.locate({name: normalized, metadata: {}});
 					})
 					.then(function(address) {
+						var resolvePath = address.replace('file:', '').replace('.js', '');
+						if(isWin) {
+							resolvePath = address.replace('file:///C:', '').replace('.js', '');
+						}
 						if (isPath) {
-							options.includePaths.push(
-									path.resolve(address.replace('file:', '').replace('.js', ''))
-							);
+							var rpath = path.resolve(resolvePath);
+							options.includePaths.push(mypath);
 						} else {
-							var originalRelativePath      = path.relative(
-									path.dirname(file.path),
-									path.resolve(address.replace('file:', '').replace('.js', ''))
+
+							var originalRelativePath = path.relative(
+								path.dirname(file.path),
+								path.resolve(resolvePath)
 							);
 							var originalRelativePathArray = originalRelativePath.split(path.sep);
 
