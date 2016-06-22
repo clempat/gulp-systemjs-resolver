@@ -6,6 +6,7 @@ var System  = require('systemjs');
 var RSVP    = require('rsvp');
 var Promise = require('rsvp').Promise;
 var path    = require('path');
+var url     = require('url');
 
 var regex     = /@import(Path)?\s*['"](~.*)['"]/mig;
 var regexFile = /@import\s*['"](~.*)['"]/mig;
@@ -57,12 +58,12 @@ module.exports = function(options) {
 					.then(function(address) {
 						if (isPath) {
 							options.includePaths.push(
-									path.resolve(address.replace('file:', '').replace('.js', ''))
+					        path.resolve(url.parse(address).path.replace('.js', ''))
 							);
 						} else {
 							var originalRelativePath      = path.relative(
 									path.dirname(file.path),
-									path.resolve(address.replace('file:', '').replace('.js', ''))
+									path.resolve(url.parse(address).path.replace('.js', ''))
 							);
 							var originalRelativePathArray = originalRelativePath.split(path.sep);
 
