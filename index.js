@@ -57,18 +57,20 @@ module.exports = function(options) {
 					.then(function(address) {
 						if (isPath) {
 							options.includePaths.push(
-									path.resolve(address.replace('file:', '').replace('.js', ''))
+								path.resolve(address.replace('file:///', '').replace('.js', ''))
 							);
 						} else {
-							var originalRelativePath      = path.relative(
-									path.dirname(file.path),
-									path.resolve(address.replace('file:', '').replace('.js', ''))
-							);
+						    var originalRelativePath = path.relative(
+						        path.dirname(file.path),
+						        path.resolve(
+						            path.dirname(options.systemConfig),
+						            address.replace('file:///', '').replace('.js', '')
+						        )
+						    );
 							var originalRelativePathArray = originalRelativePath.split(path.sep);
-
 							replacements[i] = path.posix?
-									path.posix.join.apply(this, originalRelativePathArray):
-									path.normalize(originalRelativePath).replace(/\\/g, '/').replace('//', '/');
+								path.posix.join.apply(this, originalRelativePathArray):
+								path.normalize(originalRelativePath).replace(/\\/g, '/').replace('//', '/');
 						}
 					});
 		}
