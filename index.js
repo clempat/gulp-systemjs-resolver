@@ -57,12 +57,12 @@ module.exports = function(options) {
 					.then(function(address) {
 						if (isPath) {
 							options.includePaths.push(
-									path.resolve(address.replace('file:', '').replace('.js', ''))
+									path.resolve(address.replace('file:///', '').replace('.js', ''))
 							);
 						} else {
 							var originalRelativePath      = path.relative(
 									path.dirname(file.path),
-									path.resolve(address.replace('file:', '').replace('.js', ''))
+									path.resolve(address.replace('file:///', '').replace('.js', ''))
 							);
 							var originalRelativePathArray = originalRelativePath.split(path.sep);
 
